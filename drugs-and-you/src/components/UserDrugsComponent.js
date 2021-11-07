@@ -13,6 +13,8 @@ export const UserDrugsComponent = props => {
     <div>
         <div>
             {hello}
+         </div>
+         <div>
             {hola}
         </div>
     </div>
