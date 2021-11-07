@@ -1,0 +1,37 @@
+import React, {Component, useEffect} from 'react';
+
+class DrugComponent extends Component {
+    constructor(props){
+	super(props);
+	this.state = {
+	    value: '',
+	    timeout: null
+	}
+	this.handleChange = this.handleChange.bind(this);
+    }
+
+ 
+    handleChange = (event) => {
+	useEffect(()=>{
+	if(this.state.timeout !== null){
+	    clearTimeout(this.state.timeout);
+	}
+	this.setState({value: event.target.value});
+	this.state.timeout = setTimeout((value)=>{
+	    console.log(value)},3000);
+	})
+    }
+    
+    render(){
+	return(
+	    <div>
+		<p> Input Text </p>
+		<input type="text" value={this.state.value} onChange={this.handleChange} />
+		
+	    </div>
+
+	);
+    }
+}
+
+export default DrugComponent; 
