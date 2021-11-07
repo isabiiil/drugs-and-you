@@ -1,4 +1,4 @@
-import ROAeact, {Component, useEffect} from 'react';
+import React, {Component, useEffect} from 'react';
 import '../css/TextBox.css'
 import axios from 'axios'
 import UserDrugsComponent from './UserDrugsComponent.js';
