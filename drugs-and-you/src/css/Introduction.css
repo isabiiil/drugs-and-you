@@ -1,0 +1,11 @@
+.introduction_overall_wrapper {
+    text-align:center;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr
+}
+.introduction_wrapper {
+    margin: auto;
+    width:50%;
+    height:100%;
+}
+

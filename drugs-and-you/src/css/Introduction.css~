@@ -1,0 +1,7 @@
+.introduction_overall_wrapper {
+    text-align:center
+}
+.introduction_wrapper {
+    width: 50%;
+    margin: auto;
+}
