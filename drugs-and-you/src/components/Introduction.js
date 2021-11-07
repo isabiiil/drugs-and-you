@@ -1,10 +1,11 @@
 import React from "react";
 import '../css/Introduction.css'
 import Pills from '../assets/pills.jpeg'
+import Doctors from '../assets/doctors.jpeg'
 export const Introduction = props => {
   return (
     <div>
-      <h1 className='app_title'>Drugs And You</h1>
+      <h1 className='app_title'>Drugs & You</h1>
 	  <div className='introduction_overall_wrapper'>
 			<img src={Pills} alt="Pills" width="250" height="250"/>
 			<div className='introduction_wrapper'>
@@ -35,7 +36,7 @@ export const Introduction = props => {
 				</ul>
 				
 			</div>
-			<div>hello</div>	
+	  <div><img src={Doctors} width="250" height= "250"/></div>	
 	    </div>
 	</div>
       );

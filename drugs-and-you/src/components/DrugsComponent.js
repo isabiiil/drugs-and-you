@@ -1,5 +1,5 @@
 import React, {Component, useEffect} from 'react';
-import {SpinnerCircular} from 'spinners-react';
+import '../css/TextBox.css'
 
 class DrugComponent extends Component {
     constructor(props){
@@ -50,9 +50,9 @@ class DrugComponent extends Component {
     
     render(){
 	var awaitingRequest = null;
-	var optionsLoaded = [<option value="Loading..."/ >];
+	var optionsLoaded = [];
 	if(this.state.awaitRequest === true){
-	    awaitingRequest = <SpinnerCircular size={50} thickness={100} speed={100} color="#36ad47" secondaryColor="rgba(0, 0, 0, 0.44)" /> 
+	    
 	}
 	if(this.state.optionsLoaded === true){
 	    optionsLoaded.push(<option value="Chocolate" />);
@@ -60,9 +60,8 @@ class DrugComponent extends Component {
 	}
 	return(
 	    <div>
-		<p> Input Text </p>
 		<form onSubmit={this.handleSubmit}>
-		    <input list="drug-list" id="drugs" value={this.state.value} onChange={this.handleChange}/>
+		    <input list="drug-list" id="drugs" value={this.state.value} onChange={this.handleChange} placeholder="Enter any drugs or medications here" className="drugList" autocomplete="off"/>
 		    <datalist id="drug-list">
 			{optionsLoaded}
 			</datalist>

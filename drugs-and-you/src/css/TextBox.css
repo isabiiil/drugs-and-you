@@ -1,0 +1,15 @@
+.drugList{
+    width: 250px;
+}
+
+.diseaseList{
+    width: 250px;
+}
+
+.diseaseList::placeholder{
+    font-size:11px;
+}
+
+.drugList::placeholder{
+    font-size:13px;
+}

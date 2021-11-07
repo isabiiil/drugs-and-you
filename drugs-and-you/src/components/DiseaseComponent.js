@@ -59,9 +59,8 @@ class DiseaseComponent extends Component {
 	}
 	return(
 	    <div>
-		<p> Input Text </p>
 		<form onSubmit={this.handleSubmit}>
-		    <input list="disease-list" id="disease" value={this.state.value} onChange={this.handleChange}/>
+		    <input list="disease-list" id="disease" value={this.state.value} onChange={this.handleChange} className="diseaseList" placeholder="Enter any diseases or prexisting conditions here" autocomplete="off"/>
 		    <datalist id="disease-list">
 			{optionsLoaded}
 			</datalist>
