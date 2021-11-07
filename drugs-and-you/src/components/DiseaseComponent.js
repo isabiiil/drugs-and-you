@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import '../css/TextBox.css'
-import axios from 'axios'
-
+import axios from 'axios' 
 class DiseaseComponent extends Component {
     constructor(props){
 	super(props);
 	this.state = {
 	    value: '',
-	    selected: '',
+	    selectedConditions: [],
 	    sendRequest: false,
 	    timeout: null,
 	    diseaseName: '',
@@ -33,7 +32,7 @@ class DiseaseComponent extends Component {
     }
     selectedDisease(event){
 	this.setState({sendRequest:true});
-	this.setState({selected:event.target.value})
+	this.setState({selectedConditions:[...this.state.selectedConditions,this.state.value]})
 	console.log(this.state.selected);
     }
     
@@ -76,7 +75,13 @@ class DiseaseComponent extends Component {
 			{loaded}
 			</datalist>
 		</form>
+		<div>
+		    
+	    <button class="button">
+		Add Health Condition
+	    </button>
 	    </div>
+		</div>
 	);
     }
 }

@@ -1,3 +1,5 @@
+
+
 .drugList{
     width: 250px;
 }
@@ -12,4 +14,17 @@
 
 .drugList::placeholder{
     font-size:13px;
+}
+
+ .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  flex-direction:row;
+  display:flex;
+  justify-content:space-around;
+  margin:auto;
+  margin-top: 20px;
+  font-size: 16px;
 }

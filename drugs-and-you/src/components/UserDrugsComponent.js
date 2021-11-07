@@ -1,22 +1,31 @@
-import React from "react";
+import React, {Component} from "react";
+import '../css/UserDrugsComponent.css'
 
+class UserDrugsComponent extends Component {
+    constructor(props){
+	super(props);
+	this.state = {
+	}
+    }
+    render(){
+	console.log(this.props);
+	var drugs = [];
+	var {selectedDrugs} = {...this.props}
+	selectedDrugs.map((moreDrugs)=>{
+	    drugs.push(
+		<div className="addedDrugs">
+		<li>
+		{moreDrugs} </li>
+		    </div>)
+	})
+	return(
+	    <div>
+		{drugs}
+	   
+	</div>
+	);
 
-const drug_list=['d','d','d','d','d'];
-const disease_list=['s','s','s','s','s'];
-
-export const UserDrugsComponent = props => {
-    //props.drugs
-    //props.diseases
-    hello = drug_list.map{x,y=> <div key={y}>{x} </div> }
-    hola = disease_list.map{x=> <div>{x} </div> }
-  return (
-    <div>
-        <div>
-            {hello}
-         </div>
-         <div>
-            {hola}
-        </div>
-    </div>
-      );
-    };
+    }
+}
+export default UserDrugsComponent;
+ 

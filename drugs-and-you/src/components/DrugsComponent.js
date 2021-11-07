@@ -1,6 +1,7 @@
-import React, {Component, useEffect} from 'react';
+import ROAeact, {Component, useEffect} from 'react';
 import '../css/TextBox.css'
 import axios from 'axios'
+import UserDrugsComponent from './UserDrugsComponent.js';
 
 class DrugComponent extends Component {
     constructor(props){
@@ -12,6 +13,7 @@ class DrugComponent extends Component {
 	    timeout: null,
 	    optionsLoaded: false,
 	    options: [],
+	    selectedDrugs: [],
 	}
 	this.handleChange = this.handleChange.bind(this);
 	this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,6 +23,7 @@ class DrugComponent extends Component {
  
     handleChange = (event) => { 
 	this.setState({value:event.target.value});
+	this.setState({id:event.target.id}); 
 	if(this.state.timeout === null){
 	    if(this.state.selected.length !== 0){
 	    this.state.timeout = setTimeout(()=>{
@@ -31,12 +34,13 @@ class DrugComponent extends Component {
 	    }
 	}
     }
-    selectedDrug(event){
+    selectedDrug(){
 	this.setState({options:[]});
 	this.setState({optionsLoaded:false});
 	this.setState({sendRequest:true});
-	this.setState({selected:event.target.value})
+	this.setState({selectedDrugs:[...this.state.selectedDrugs,this.state.value]});
 	this.setState({value:''});
+	console.log(this.state.selectedDrugs);
     }
     
     handleSubmit(event){
@@ -53,8 +57,7 @@ class DrugComponent extends Component {
 		this.setState({optionsLoaded:false});
 		axios.post('http://127.0.0.1:5000/api/drug_names', {data:this.state.value}, {headers:{'content-type': 'text/json'}})
 		    .then(res => {
-			const data = res.data;
-			if(data.drug_names[0].length > 1) { 
+			const data = res.data; 
 			data['drug_names'][0].map((drugs) => {
 			    var drugObject = {
 				drugs: drugs['drug_name'],
@@ -66,7 +69,6 @@ class DrugComponent extends Component {
 				optionsLoaded:true});
 
 			})
-			}
 		    })
 	    }
 	    this.setState({sendRequest: false});
@@ -81,18 +83,26 @@ class DrugComponent extends Component {
 	}
 	if(this.state.optionsLoaded === true){
 	    this.state.options.map((option)=>{
-		loaded.push(<option value={option['drugs']}/>);
+		loaded.push(<option value={option['drugs']} />);
 	    });
 	}
 	return(
 	    <div>
+		
+	    <UserDrugsComponent selectedDrugs={this.state.selectedDrugs} />
 		<form onSubmit={this.handleSubmit}>
-		    <input list="drug-list" id="drugs" value={this.state.value} onChange={this.handleChange} placeholder="Enter any drugs or medications here" className="drugList" autocomplete="off" onSelected={this.selectedDrug}/>
+		    <input list="drug-list" id="drugs" value={this.state.value} onChange={this.handleChange} placeholder="Enter any drugs or medications here" className="drugList" autocomplete="off"/>
 		    <datalist id="drug-list">
 			{loaded}
 			</datalist>
 		</form>
+		<div>
+		    <button onClick={this.selectedDrug} class="button">
+			Add Medication 
+			</button>
+			</div>
 	    </div>
+	    
 	);
     }
 }
