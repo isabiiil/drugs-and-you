@@ -4,6 +4,7 @@ import DrugComponent from './components/DrugsComponent.js';
 import Introduction from './components/Introduction.js';
 import DiseaseComponent from './components/DiseaseComponent';
 
+
 function App() {
     return (
 	    <div>

@@ -1,68 +1,79 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component} from 'react';
+import '../css/TextBox.css'
+import axios from 'axios'
 
 class DiseaseComponent extends Component {
     constructor(props){
 	super(props);
 	this.state = {
 	    value: '',
+	    selected: '',
 	    sendRequest: false,
 	    timeout: null,
-	    optionsLoaded: false, 
+	    diseaseName: '',
+	    diseaseNameLoaded: false,
 	}
 	this.handleChange = this.handleChange.bind(this);
-	this.handleSubmit = this.handleSubmit.bind(this); 
+	this.handleSubmit = this.handleSubmit.bind(this);
+	this.selectedDisease = this.selectedDisease.bind(this);
     }
 
  
-    handleChange = (event) => {
+    handleChange = (event) => { 
 	this.setState({value:event.target.value});
-	if(this.state.timeout === null){ 
+	if(this.state.timeout === null){
+	    if(this.state.selected.length !== 0){
 	    this.state.timeout = setTimeout(()=>{
 		if(this.state.timeout !== null){
-		    this.setState({sendRequest: true});
+			this.setState({sendRequest: true});
 		}
 	}, 1500);
+	    }
 	}
     }
-
-    handleSubmit(event){
+    selectedDisease(event){
 	this.setState({sendRequest:true});
-	this.setState({timeout:null});
+	this.setState({selected:event.target.value})
+	console.log(this.state.selected);
+    }
+    
+    handleSubmit(event){
+	if(this.state.selected.length === 0){ 
+	    this.setState({sendRequest:true});
+	}
 	event.preventDefault();
     }
     
     componentDidUpdate(){
-	if(this.state.sendRequest === true && this.state.timeout !== null){
-	    if(this.state.value === undefined || this.state.value.length !== 0){
-		console.log(this.state.value);
+	if(this.state.sendRequest === true){
+	    if(this.state.selected.length === 0 && this.state.value.length !== 0){
+		axios.post('http://127.0.0.1:5000/api/disease_related_names', {data:this.state.value}, {headers:{'content-type': 'text/json'}})
+		    .then(res => {
+			const data = res.data;
+			this.setState({diseaseName:data['disease_related_names'][0]['disease_related_name']});
+			this.setState({diseaseNameLoaded:true});
+			this.setState({value:''});
+		    })
 	    }
 	    this.setState({sendRequest: false});
 	    this.setState({timeout: null});
-	}
-	else if(this.state.sendRequest === true){
-	    if(this.state.value === undefined || this.state.value.length !== 0){
-		console.log(this.state.value);
-	    }
-	    this.setState({sendRequest:false});
-	}
+ 	}
     }
     
     render(){
-	var awaitingRequest = null;
-	var optionsLoaded = [];
+	var loaded = null;
 	if(this.state.awaitRequest === true){
 	    
 	}
-	if(this.state.optionsLoaded === true){
-	    optionsLoaded.push(<option value="Chocolate" />);
-	    optionsLoaded.push(<option value="Coconut" />);
+	if(this.state.diseaseName.length !== 0 ){
+	    loaded = <option> {this.state.diseaseName}</option>;
 	}
 	return(
 	    <div>
 		<form onSubmit={this.handleSubmit}>
-		    <input list="disease-list" id="disease" value={this.state.value} onChange={this.handleChange} className="diseaseList" placeholder="Enter any diseases or prexisting conditions here" autocomplete="off"/>
-		    <datalist id="disease-list">
-			{optionsLoaded}
+		    <input list="diseaseList" id="diseases" value={this.state.value} onChange={this.handleChange} placeholder="Enter any disease or preexisting medical conditions" className="diseaseList" autocomplete="off" onselected={this.selectedDisease}/>
+		    <datalist id="diseaseList">
+			{loaded}
 			</datalist>
 		</form>
 	    </div>
