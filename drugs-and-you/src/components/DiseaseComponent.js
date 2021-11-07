@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import '../css/TextBox.css'
+import UserDiseaseComponent from './UserDiseaseComponent.js'
 import axios from 'axios' 
 class DiseaseComponent extends Component {
     constructor(props){
 	super(props);
 	this.state = {
+	    selected: '',
 	    value: '',
 	    selectedConditions: [],
 	    sendRequest: false,
@@ -21,19 +23,17 @@ class DiseaseComponent extends Component {
     handleChange = (event) => { 
 	this.setState({value:event.target.value});
 	if(this.state.timeout === null){
-	    if(this.state.selected.length !== 0){
 	    this.state.timeout = setTimeout(()=>{
 		if(this.state.timeout !== null){
 			this.setState({sendRequest: true});
 		}
 	}, 1500);
-	    }
 	}
     }
     selectedDisease(event){
 	this.setState({sendRequest:true});
 	this.setState({selectedConditions:[...this.state.selectedConditions,this.state.value]})
-	console.log(this.state.selected);
+	this.setState({value:''});
     }
     
     handleSubmit(event){
@@ -64,11 +64,12 @@ class DiseaseComponent extends Component {
 	if(this.state.awaitRequest === true){
 	    
 	}
-	if(this.state.diseaseName.length !== 0 ){
+	if(this.state.diseaseNameLoaded === true){
 	    loaded = <option> {this.state.diseaseName}</option>;
 	}
 	return(
 	    <div>
+		<UserDiseaseComponent selectedConditions={this.state.selectedConditions}/> 
 		<form onSubmit={this.handleSubmit}>
 		    <input list="diseaseList" id="diseases" value={this.state.value} onChange={this.handleChange} placeholder="Enter any disease or preexisting medical conditions" className="diseaseList" autocomplete="off" onselected={this.selectedDisease}/>
 		    <datalist id="diseaseList">
@@ -77,7 +78,7 @@ class DiseaseComponent extends Component {
 		</form>
 		<div>
 		    
-	    <button class="button">
+		    <button class="button" onClick={this.selectedDisease}>
 		Add Health Condition
 	    </button>
 	    </div>

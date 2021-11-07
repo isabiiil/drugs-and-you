@@ -1,4 +1,4 @@
-import ROAeact, {Component, useEffect} from 'react';
+import React, {Component, useEffect} from 'react';
 import '../css/TextBox.css'
 import axios from 'axios'
 import UserDrugsComponent from './UserDrugsComponent.js';
@@ -57,7 +57,8 @@ class DrugComponent extends Component {
 		this.setState({optionsLoaded:false});
 		axios.post('http://127.0.0.1:5000/api/drug_names', {data:this.state.value}, {headers:{'content-type': 'text/json'}})
 		    .then(res => {
-			const data = res.data; 
+			const data = res.data;
+			if(!data['drug_names'][0].includes('sorry')){
 			data['drug_names'][0].map((drugs) => {
 			    var drugObject = {
 				drugs: drugs['drug_name'],
@@ -67,8 +68,8 @@ class DrugComponent extends Component {
 				options: [...this.state.options, drugObject]});
 			    this.setState({
 				optionsLoaded:true});
-
 			})
+			}
 		    })
 	    }
 	    this.setState({sendRequest: false});
