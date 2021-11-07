@@ -2,10 +2,10 @@
 
 
 
-cd python
-pip3 install -r requirements.txt
+<br>cd python
+<br>pip3 install -r requirements.txt
 
-cd ..
-cd drugs-and-you
-npm install
-npm start
+<br>cd ..
+<br>cd drugs-and-you
+<br>npm install
+<br>npm start
